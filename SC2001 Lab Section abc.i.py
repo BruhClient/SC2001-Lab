@@ -49,6 +49,27 @@ def merge(left, right):
     return new, comparison
 
 
+# Original merge sort using merge
+def merge_sort(lst):
+
+    n = len(lst)
+
+    if n <= 1:  # Base case: a list with one element is already sorted
+        return lst[:], 0
+
+    middle = n // 2
+
+    # Continue dividing until each sublist contains one element
+    left, left_comparison = merge_sort(lst[:middle])
+    right, right_comparison = merge_sort(lst[middle:])
+
+    sorted_list, merge_comparison = merge(left, right)
+
+    comparison = left_comparison + right_comparison + merge_comparison
+    return sorted_list, comparison
+
+
+
 # Using insertion when sublist size is smaller than s
 # s is the threshold subarray size at which the hybrid algorithm switches from merge sort to insertion sort
 
