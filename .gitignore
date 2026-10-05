@@ -1,3 +1,8 @@
 __pycache__/
 *.pyc
 .ipynb_checkpoints/
+
+# Claude / agent skills (local tooling)
+.claude/
+.agents/
+skills-lock.json
