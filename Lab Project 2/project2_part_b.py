@@ -1,5 +1,6 @@
 import heapq
 
+
 def create_adjacency_list(number_of_vertices, edges, directed=False):
     """Create an array of adjacency lists from (start, end, weight) edges."""
     adjacency_list = [[] for _ in range(number_of_vertices)]
@@ -14,29 +15,26 @@ def create_adjacency_list(number_of_vertices, edges, directed=False):
 
     return adjacency_list
 
-def dijkstraB(graph, source):
-    # Using minimizing heap for the priority queue to implement Dijkstra's algorithm
 
-    # Store the shortest known distance from the source to every vertex
-    distances = [float("inf")] * len(graph)
+def dijkstraB(adjacency_list, source):
+    """Find the shortest distance from source to every vertex."""
+    distances = [float("inf")] * len(adjacency_list)
     distances[source] = 0
 
-    # Each heap entry is (distance from source, vertex)
+    # The priority queue is a min-heap of (distance, vertex) pairs.
     min_heap = [(0, source)]
 
     while min_heap:
-        # Process the entry with the smallest distance
         current_distance, vertex = heapq.heappop(min_heap)
 
-        # Skip this entry if a shorter route was already found
+        # Ignore this entry if a shorter route was already discovered.
         if current_distance > distances[vertex]:
             continue
 
-        # graph[vertex] contains (neighbour, edge weight) pairs
-        for neighbour, weight in graph[vertex]:
+        # Relax every edge leaving the current vertex.
+        for neighbour, weight in adjacency_list[vertex]:
             new_distance = current_distance + weight
 
-            # Update the neighbour when this route is shorter
             if new_distance < distances[neighbour]:
                 distances[neighbour] = new_distance
                 heapq.heappush(min_heap, (new_distance, neighbour))
